@@ -10,9 +10,23 @@ import { Button } from '@/app/ui/button';
 import { createInvoice } from '@/app/lib/actions';
 
 export default function Form({ customers }: { customers: CustomerField[] }) {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    
+    const formData = new FormData(e.currentTarget);
+    formData.append('customerId', formData.get('customerId') as string);
+    formData.append('amount', formData.get('amount') as string);
+    formData.append('status', formData.get('status') as string);
+    try {
+      await createInvoice(formData);
+      // Handle success (e.g., redirect to another page or show a success message)
+    } catch (error) {
+      // Handle error (e.g., show an error message)
+    }
+  };
+
   return (
-     
-    <form action={createInvoice}>
+    <form onSubmit={handleSubmit}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Customer Name */}
         <div className="mb-4">
@@ -73,6 +87,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
                   type="radio"
                   value="pending"
                   className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
+                  defaultChecked
                 />
                 <label
                   htmlFor="pending"
