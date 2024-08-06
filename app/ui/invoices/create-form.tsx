@@ -8,7 +8,20 @@ import {
   UserCircleIcon,
 } from '@heroicons/react/24/outline';
 import { Button } from '@/app/ui/button';
-import { createInvoice } from '@/app/lib/actions';
+// import { createInvoice } from '@/app/lib/actions';
+
+export async function createInvoice(formData: FormData) {
+  'use server';
+  
+  const rawFormData = {
+    customerId: formData.get("customerId"),
+    amount: formData.get("amount"),
+    status: formData.get("status"),
+  };
+  // Test it out:
+  console.log(rawFormData);
+}
+
 
 export default function Form({ customers }: { customers: CustomerField[] }) {
   
