@@ -1,11 +1,16 @@
 "use client";
+
+import { useDebouncedCallback } from 'use-debounce';
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { Suspense } from 'react';
 
-export default function Search({ placeholder }: { placeholder: string }) {
+function SearchInner({ placeholder }: { placeholder: string }) {
   const searchParams = useSearchParams();
-  function handleSearch(term: string) {
+
+  const handleSearch = useDebouncedCallback((term) => {
+  
     const params = new URLSearchParams(searchParams);
     const pathname = usePathname();
     const { replace } = useRouter();
@@ -17,7 +22,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
     }
 
     replace(`${pathname}?${params.toString()}`);
-  }
+  }, 300);
   return (
     <div className="relative flex flex-1 flex-shrink-0">
       <label htmlFor="search" className="sr-only">
@@ -35,3 +40,13 @@ export default function Search({ placeholder }: { placeholder: string }) {
     </div>
   );
 }
+
+function search({ placeholder }: { placeholder: string }) {
+  return (
+    <Suspense>
+      <SearchInner placeholder={placeholder} />
+    </Suspense>
+  )
+}
+
+export default search
