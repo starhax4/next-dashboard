@@ -1,5 +1,9 @@
 "use server";
 
+
+export default function Page(){
+    
+}
 export async function createInvoice(formData: FormData) {
   console.log("Action is started!");
 
