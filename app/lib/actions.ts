@@ -1,4 +1,6 @@
 "use server";
+import { redirect } from 'next/navigation';
+
 
 export async function createInvoice(formData: FormData) {
   console.log("Action is started!");
@@ -9,7 +11,7 @@ export async function createInvoice(formData: FormData) {
     status: formData.get("status"),
   };
   // Test it out:
-  console.log(typeof rawFormData.amount);
+  redirect('/dashboard/invoices');
   
 }
 
