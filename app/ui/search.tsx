@@ -14,7 +14,7 @@ function search({ placeholder }: { placeholder: string }) {
   
     const params = new URLSearchParams(searchParams);
     const pathname = usePathname();
-    const { replace } = useRouter();
+    const router = useRouter();
 
     params.set('page', '1');
     if (term) {
@@ -22,8 +22,8 @@ function search({ placeholder }: { placeholder: string }) {
     } else {
       params.delete("query");
     }
-
-    replace(`${pathname}?${params.toString()}`);
+    
+    router.replace(`${pathname}?${params.toString()}`);
   }, 300);
   return (
     <div className="relative flex flex-1 flex-shrink-0">
