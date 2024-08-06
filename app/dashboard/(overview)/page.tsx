@@ -43,7 +43,6 @@ export default async function Page() {
           <LatestInvoices />
         </Suspense>
         
-        <LatestInvoices />
       </div>
     </main>
   );
