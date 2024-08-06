@@ -13,9 +13,6 @@ function search({ placeholder }: { placeholder: string }) {
   const handleSearch = useDebouncedCallback((term) => {
     const params = new URLSearchParams(searchParams);
 
-    console.log("Current searchParams:", searchParams);
-    console.log("Current pathname:", pathname);
-    console.log("Current term:", term);
 
     params.set('page', '1');
     if (term) {
@@ -25,7 +22,6 @@ function search({ placeholder }: { placeholder: string }) {
     }
 
     const newUrl = `${pathname}?${params.toString()}`;
-    console.log("New URL:", newUrl);
 
     router.replace(newUrl);
   }, 300);
