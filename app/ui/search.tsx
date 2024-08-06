@@ -5,16 +5,17 @@ import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
-
-
 function search({ placeholder }: { placeholder: string }) {
   const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
 
   const handleSearch = useDebouncedCallback((term) => {
-  
     const params = new URLSearchParams(searchParams);
-    const pathname = usePathname();
-    const router = useRouter();
+
+    console.log("Current searchParams:", searchParams);
+    console.log("Current pathname:", pathname);
+    console.log("Current term:", term);
 
     params.set('page', '1');
     if (term) {
@@ -22,9 +23,13 @@ function search({ placeholder }: { placeholder: string }) {
     } else {
       params.delete("query");
     }
-    
-    router.replace(`${pathname}?${params.toString()}`);
+
+    const newUrl = `${pathname}?${params.toString()}`;
+    console.log("New URL:", newUrl);
+
+    router.replace(newUrl);
   }, 300);
+
   return (
     <div className="relative flex flex-1 flex-shrink-0">
       <label htmlFor="search" className="sr-only">
@@ -43,4 +48,4 @@ function search({ placeholder }: { placeholder: string }) {
   );
 }
 
-export default search
+export default search;
